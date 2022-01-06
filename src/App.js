@@ -7,9 +7,13 @@ class App extends React.Component {
   render() { 
     return <Container component="article" maxWidth="sm">
       <Typography variant='h2' align='center' component='hq'>Formulario de Cadastro</Typography>
-      <FormularioCadastro/>
+      <FormularioCadastro aoEnviar={onSubmitForm}/>
     </Container>;
   }
+}
+
+function onSubmitForm(dados){
+  console.log(dados)
 }
  
 export default App;

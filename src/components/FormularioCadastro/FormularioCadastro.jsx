@@ -1,35 +1,29 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from "@material-ui/core/Button";
 import { TextField, Switch, FormControlLabel } from '@material-ui/core';
 
 
-function FormularioCadastro() {
+function FormularioCadastro({aoEnviar}) {
     const [nome, setNome] = useState('');
     const [sobrenome, setSobrenome] = useState('');
-    
+    const [cpf, setCpf] = useState('');
+    const [promocoes, setPromocoes] = useState(true);
+    const [novidades, setNovidades] = useState(true);
+    //const aoEnviar = props.aoEnviar;
 
     return (
         <form onSubmit={(event) => {
             event.preventDefault();
-            console.log(nome, sobrenome)
-            console.log(event)
+            aoEnviar({nome,sobrenome,cpf, novidades, promocoes})
+            
+            
         }}>
 
             <TextField margin="normal"
                 value={nome}
-
-
                 onChange={(event) => {
-                    let tempNome = event.target.value;
-                   
-                    if (tempNome.length >= 3) {
-                        tempNome =tempNome.substring(0,3)  
-                    }
-                    setNome(tempNome)
-                    console.log(nome)
-                }
-                
-                }
+                    setNome(event.target.value)
+                }}
                 variant="outlined"
                 fullWidth id='nome'
                 label='Nome'
@@ -39,7 +33,7 @@ function FormularioCadastro() {
             <TextField margin="normal"
                 value={sobrenome}
                 onChange={(event) => {
-                   setSobrenome(event.target.value)
+                    setSobrenome(event.target.value)
                 }}
                 variant="outlined"
                 fullWidth id='sobrenome'
@@ -48,16 +42,31 @@ function FormularioCadastro() {
 
 
             <TextField margin="normal"
+                value={cpf}
+                onChange={(event)=>{
+                    setCpf(event.target.value);
+                }}
                 variant="outlined"
                 fullWidth id='cpf'
                 label='CPF'
                 type="text" />
 
             <FormControlLabel label="Promoções"
-                control={<Switch name='Promoções' defaultChecked={true} color='primary' />} />
+                control={<Switch name='Promoções'
+                checked={promocoes}
+                onChange={(event)=>{
+                    setPromocoes(event.target.checked)
+                }}
+                color='primary' />} />
 
             <FormControlLabel label="Novidades"
-                control={<Switch name='Novidades' defaultChecked={true} color='primary' />} />
+            control={<Switch name='Novidades'
+            checked={novidades}
+            onChange={(event)=>{
+                
+                setNovidades(event.target.checked)
+            }}
+            color='primary' />} />
 
 
 
@@ -65,5 +74,6 @@ function FormularioCadastro() {
             <Button type="submit" variant='contained' color='primary'>Cadastrar</Button>
         </form>);
 }
+
 
 export default FormularioCadastro;
