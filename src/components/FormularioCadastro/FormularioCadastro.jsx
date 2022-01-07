@@ -3,20 +3,19 @@ import Button from "@material-ui/core/Button";
 import { TextField, Switch, FormControlLabel } from '@material-ui/core';
 
 
-function FormularioCadastro({aoEnviar}) {
+function FormularioCadastro({aoEnviar, validarCpf}) {
     const [nome, setNome] = useState('');
     const [sobrenome, setSobrenome] = useState('');
     const [cpf, setCpf] = useState('');
     const [promocoes, setPromocoes] = useState(true);
     const [novidades, setNovidades] = useState(true);
+    const [errors, setErrors] = useState({cpf:{valido:true, texto:''}})
     //const aoEnviar = props.aoEnviar;
 
     return (
         <form onSubmit={(event) => {
             event.preventDefault();
             aoEnviar({nome,sobrenome,cpf, novidades, promocoes})
-            
-            
         }}>
 
             <TextField margin="normal"
@@ -46,6 +45,14 @@ function FormularioCadastro({aoEnviar}) {
                 onChange={(event)=>{
                     setCpf(event.target.value);
                 }}
+
+                onBlur={(event)=>{
+                    const valido = validarCpf(cpf)
+                    setErrors({cpf:valido})
+                }}
+
+                error={!errors.cpf.valido}
+                helperText={errors.cpf.texto}
                 variant="outlined"
                 fullWidth id='cpf'
                 label='CPF'
